@@ -66,8 +66,24 @@ bool secondImuActive = false;
 BatteryMonitor battery;
 TPSCounter tpsCounter;
 
+static void disableUnusedBoardPins() {
+#if defined(ESP32C3) && BOARD == BOARD_ESP32C3_SUPERMINI
+	for (uint8_t pin : {0, 1, 2, 3, 5, 9, 10}) {
+		pinMode(pin, INPUT);
+	}
+
+	// GPIO8 is an active-low blue LED on many ESP32-C3 SuperMini revisions.
+	pinMode(8, OUTPUT);
+	digitalWrite(8, HIGH);
+#endif
+}
+
 void setup() {
+#ifdef ESP32
+	Serial.setRxBufferSize(1024);
+#endif
 	Serial.begin(serialBaudRate);
+	disableUnusedBoardPins();
 	globalTimer = timer_create_default();
 
 	Serial.println();

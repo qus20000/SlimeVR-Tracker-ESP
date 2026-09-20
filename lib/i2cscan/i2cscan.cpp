@@ -28,9 +28,15 @@ namespace I2CSCAN {
 		std::array<std::string, 7> portMap = {"D0", "D1", "D2", "D4", "D5", "D6", "D7"};
 		std::array<uint8_t, 1> portExclude = {LED_PIN};
 #elif defined(ESP32C3)
+#if BOARD == BOARD_ESP32C3_SUPERMINI
+		std::array<uint8_t, 2> portArray = {6, 7};
+		std::array<std::string, 2> portMap = {"6", "7"};
+		std::array<uint8_t, 0> portExclude = {};
+#else
 		std::array<uint8_t, 9> portArray = {2, 3, 4, 5, 6, 7, 8, 9, 10};
 		std::array<std::string, 9> portMap = {"2", "3", "4", "5", "6", "7", "8", "9", "10"};
 		std::array<uint8_t, 5> portExclude = {18, 19, 20, 21, LED_PIN};
+#endif
 #elif defined(ESP32C6)
 		std::array<uint8_t, 20> portArray = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 14, 15, 18, 19, 20, 21, 22, 23};
 		std::array<std::string, 20> portMap = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "14", "15", "18", "19", "20", "21", "22", "23"};
@@ -124,6 +130,7 @@ namespace I2CSCAN {
 #ifdef ESP32
 		if (currentAddress == 1) {
             Wire.end();
+            Wire.begin((int)validPorts[currentSDA], (int)validPorts[currentSCL]);
 		}
 #endif
 

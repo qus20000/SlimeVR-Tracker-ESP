@@ -552,7 +552,7 @@
 				"SENSORS": [
 					{
 						"protocol": "I2C",
-						"imu": "IMU_AUTO",
+						"imu": "IMU_ICM45686",
 						"int": "255",
 						"rotation": "DEG_90",
 						"scl": "7",
@@ -567,7 +567,7 @@
 					"pin": "4"
 				},
 				"LED": {
-					"LED_PIN": "LED_BUILTIN",
+					"LED_PIN": "255",
 					"LED_INVERTED": false
 				}
 			},

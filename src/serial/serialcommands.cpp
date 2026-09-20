@@ -470,5 +470,10 @@ void setUp() {
 #endif
 }
 
-void update() { cmdCallbacks.updateCmdProcessing(&cmdParser, &cmdBuffer, &Serial); }
+void update() {
+	uint16_t processedChars = 0;
+	while (Serial.available() && processedChars++ < 512) {
+		cmdCallbacks.updateCmdProcessing(&cmdParser, &cmdBuffer, &Serial);
+	}
+}
 }  // namespace SerialCommands
